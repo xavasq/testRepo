@@ -22,3 +22,14 @@ func (s *UserRepository) CreateUser(ctx context.Context, user *models.User) erro
 	}
 	return nil
 }
+
+func (r *UserRepository) GetUserByName(ctx context.Context, name string) (*models.User, error) {
+	query := "SELECT id, name, age FROM users WHERE name = $1"
+
+	var user models.User
+
+	if err := r.db.QueryRow(ctx, query, name).Scan(&user.ID, &user.Name, &user.Age); err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

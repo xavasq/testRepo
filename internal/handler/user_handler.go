@@ -29,3 +29,14 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 	}
 	c.JSON(201, gin.H{"user": user})
 }
+
+func (h *UserHandler) GetUserByEmail(c *gin.Context) {
+	name := c.Param("name")
+
+	user, err := h.service.GetUserByName(context.Background(), name)
+	if err != nil {
+		c.JSON(404, gin.H{"error": "пользователь не найден"})
+		return
+	}
+	c.JSON(200, gin.H{"user": user})
+}

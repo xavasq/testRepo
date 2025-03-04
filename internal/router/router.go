@@ -16,5 +16,6 @@ func SetupRouter(r *gin.Engine, db *pgxpool.Pool) {
 	api := r.Group("/api")
 	{
 		api.POST("/users", userHandler.CreateUser)
+		api.GET("/users/:name", userHandler.GetUserByEmail)
 	}
 }
